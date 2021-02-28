@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Domain
@@ -7,13 +8,17 @@ namespace Domain
     /// </summary>
     public class Sphere
     {
+        public SphereId SphereId { get; }
         public SphereMoveDirection MoveDirection { get; private set; }
         public SphereAcceleration Acceleration { get; private set; }
 
-        public Sphere()
+        private const float InitialAcceleration = 5;
+
+        public Sphere(SphereId sphereId)
         {
+            SphereId = sphereId ?? throw new ArgumentNullException();
             MoveDirection = new SphereMoveDirection(Vector2.zero);
-            Acceleration = new SphereAcceleration(5);
+            Acceleration = new SphereAcceleration(InitialAcceleration);
         }
 
         public void ChangeMoveDirection(SphereMoveDirection moveDirection)

@@ -1,3 +1,4 @@
+using System;
 using Domain;
 using UnityEngine;
 
@@ -5,44 +6,32 @@ namespace Application
 {
     public class SphereApplicationService
     {
-        private readonly Sphere _sphere;
-        private readonly Rigidbody _rigidbody;
+        private readonly ISphereFactory _sphereFactory;
+        private readonly ISphereRepository _sphereRepository;
 
-        public SphereApplicationService(Rigidbody rigidbody)
+        public SphereApplicationService(ISphereFactory sphereFactory, ISphereRepository sphereRepository)
         {
-            // SphereFactoryが生成すべき気がする
-            _sphere = new Sphere();
-            _rigidbody = rigidbody;
+            _sphereFactory = sphereFactory;
+            _sphereRepository = sphereRepository;
         }
 
-        public void MoveSphere()
+        public void Create(SphereId sphereId)
         {
-            var rawMoveDirection = Vector2.zero;
+            var sphere = _sphereFactory.Create(sphereId);
+            _sphereRepository.Save(sphere);
+        }
 
-            if (Input.GetKey(KeyCode.LeftArrow))
+        public Sphere MoveSphere(SphereId sphereId, Vector2 rawMoveDir)
+        {
+            var sphere = _sphereRepository.Find(sphereId);
+            if (sphere == null)
             {
-                rawMoveDirection += Vector2.left;
+                throw new ArgumentNullException();
             }
 
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                rawMoveDirection += Vector2.up;
-            }
+            sphere.ChangeMoveDirection(new SphereMoveDirection(rawMoveDir));
 
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                rawMoveDirection += Vector2.right;
-            }
-
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                rawMoveDirection += Vector2.down;
-            }
-            
-            _sphere.ChangeMoveDirection(new SphereMoveDirection(rawMoveDirection));
-            var moveDirection = _sphere.MoveDirection;
-            var acceleration = _sphere.Acceleration;
-            _rigidbody.AddForce(new Vector3(moveDirection.Value.x, 0, moveDirection.Value.y) * acceleration.Value);
+            return sphere;
         }
     }
 }
