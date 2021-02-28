@@ -1,50 +1,54 @@
-using DefaultNamespace;
+using Application;
+using Domain;
 using UnityEngine;
 
-public class SphereView : MonoBehaviour
+namespace Presentation
 {
-    private SphereApplicationService _sphereApplicationService;
-    private Rigidbody _rigidbody;
-
-    // Start is called before the first frame update
-    private void Start()
+    public class SphereView : MonoBehaviour
     {
-        _sphereApplicationService = new SphereApplicationService();
-        _rigidbody = GetComponent<Rigidbody>();
-    }
+        private SphereApplicationService _sphereApplicationService;
+        private Rigidbody _rigidbody;
 
-    // Update is called once per frame
-    private void Update()
-    {
-        UpdateMoveDirection();
-    }
-
-    private void UpdateMoveDirection()
-    {
-        var rawMoveDirection = Vector2.zero;
-
-        if (Input.GetKey(KeyCode.LeftArrow))
+        // Start is called before the first frame update
+        private void Start()
         {
-            rawMoveDirection += Vector2.left;
+            _sphereApplicationService = new SphereApplicationService();
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        // Update is called once per frame
+        private void Update()
         {
-            rawMoveDirection += Vector2.up;
+            UpdateMoveDirection();
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        private void UpdateMoveDirection()
         {
-            rawMoveDirection += Vector2.right;
-        }
+            var rawMoveDirection = Vector2.zero;
 
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            rawMoveDirection += Vector2.down;
-        }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                rawMoveDirection += Vector2.left;
+            }
 
-        _sphereApplicationService.ChangeSphereMoveDirection(new SphereMoveDirection(rawMoveDirection));
-        var moveDirection = _sphereApplicationService.GetMoveDirection();
-        _rigidbody.AddForce(new Vector3(moveDirection.Value.x, 0, moveDirection.Value.y) * 5);
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                rawMoveDirection += Vector2.up;
+            }
+
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                rawMoveDirection += Vector2.right;
+            }
+
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                rawMoveDirection += Vector2.down;
+            }
+
+            _sphereApplicationService.ChangeSphereMoveDirection(new SphereMoveDirection(rawMoveDirection));
+            var moveDirection = _sphereApplicationService.GetMoveDirection();
+            _rigidbody.AddForce(new Vector3(moveDirection.Value.x, 0, moveDirection.Value.y) * 5);
+        }
     }
 }

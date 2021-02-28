@@ -1,4 +1,6 @@
-namespace DefaultNamespace
+using Domain;
+
+namespace Application
 {
     public class SphereApplicationService
     {

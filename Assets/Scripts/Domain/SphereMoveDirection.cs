@@ -1,14 +1,17 @@
 using UnityEngine;
 
-/// <summary>
-/// ValueObject
-/// </summary>
-public class SphereMoveDirection
+namespace Domain
 {
-    public Vector2 Value { get; }
-
-    public SphereMoveDirection(Vector2 value)
+    /// <summary>
+    /// ValueObject
+    /// </summary>
+    public class SphereMoveDirection
     {
-        Value = value == Vector2.zero ? Vector2.zero : value.normalized;
+        public Vector2 Value { get; }
+
+        public SphereMoveDirection(Vector2 value)
+        {
+            Value = value == Vector2.zero ? Vector2.zero : value.normalized;
+        }
     }
 }

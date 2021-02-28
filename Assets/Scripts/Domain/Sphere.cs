@@ -1,19 +1,22 @@
 using UnityEngine;
 
-/// <summary>
-/// Entity
-/// </summary>
-public class Sphere
+namespace Domain
 {
-    public SphereMoveDirection MoveDirection { get; private set; }
-
-    public Sphere()
+    /// <summary>
+    /// Entity
+    /// </summary>
+    public class Sphere
     {
-        MoveDirection = new SphereMoveDirection(Vector2.zero);
-    }
+        public SphereMoveDirection MoveDirection { get; private set; }
 
-    public void ChangeMoveDirection(SphereMoveDirection moveDirection)
-    {
-        MoveDirection = moveDirection;
+        public Sphere()
+        {
+            MoveDirection = new SphereMoveDirection(Vector2.zero);
+        }
+
+        public void ChangeMoveDirection(SphereMoveDirection moveDirection)
+        {
+            MoveDirection = moveDirection;
+        }
     }
 }

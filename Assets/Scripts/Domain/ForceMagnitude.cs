@@ -1,19 +1,22 @@
 using System;
 
-/// <summary>
-/// ValueObject
-/// </summary>
-public class ForceMagnitude
+namespace Domain
 {
-    public float Value { get; }
-
-    public ForceMagnitude(float value)
+    /// <summary>
+    /// ValueObject
+    /// </summary>
+    public class ForceMagnitude
     {
-        if (value < 0f)
+        public float Value { get; }
+
+        public ForceMagnitude(float value)
         {
-            throw new AggregateException($"{typeof(ForceMagnitude)} cannot be minus");
-        }
+            if (value < 0f)
+            {
+                throw new AggregateException($"{typeof(ForceMagnitude)} cannot be minus");
+            }
         
-        Value = value;
+            Value = value;
+        }
     }
 }
