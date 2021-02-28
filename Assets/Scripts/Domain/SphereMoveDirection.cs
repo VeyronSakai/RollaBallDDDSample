@@ -5,7 +5,7 @@ namespace Domain
     /// <summary>
     /// ValueObject
     /// </summary>
-    public class SphereMoveDirection
+    public readonly struct SphereMoveDirection
     {
         public Vector2 Value { get; }
 
